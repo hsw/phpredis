@@ -164,6 +164,11 @@ redis_pool_get_sock(redis_pool *pool, int slave, const char *key TSRMLS_DC) {
 
     unsigned int pos, i;
     int totalWeight = slave ? pool->slaveWeight : pool->totalWeight;
+
+    if (!totalWeight) {
+        return NULL;
+    }
+
     memcpy(&pos, key, sizeof(pos));
     pos %= totalWeight;
 
